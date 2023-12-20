@@ -5,7 +5,7 @@ on:
   push:
       branches: [ main ]
       paths:
-      - 'backend/**'
+      - 'Backend/**'
 
 env:
   COSMOS_ENDPOINT: ${{ secrets.COSMOS_ENDPOINT }} 
