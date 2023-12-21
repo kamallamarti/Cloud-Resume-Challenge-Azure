@@ -17,9 +17,11 @@ container = database.get_container_client(container_name)
 
 def get_count_from_cosmosdb() -> int:
 
-    count_item = container.read_item("/Tenantid" ,"id")
-    current_count = count_item.get('count', 0)
-    return current_count
+    items = container.query_items(query="SELECT * FROM c WHERE c.id = '1'", enable_cross_partition_query=True)
+    count_item = next(items, None)
+    if count_item:
+        current_count = count_item.get('count', 0)
+        return current_count
     
 def test_resume_counter():
     initial_count = get_count_from_cosmosdb()

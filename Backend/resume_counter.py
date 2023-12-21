@@ -16,13 +16,16 @@ container = database.get_container_client(container_name)
 
 def count_updater(req: func.HttpRequest) -> func.HttpResponse:
     
-    count_item = container.read_item("/Tenantid" ,"id")
-    if not count_item:
+    items = container.query_items(query="SELECT * FROM c WHERE c.id = '1'", enable_cross_partition_query=True)
+    count_item = next(items, None)
+    if count_item:
+        current_count = count_item.get('count', 0)
+    if not current_count:
         return func.HttpResponse(
             "Count item missing",
             status_code=400 
         )
-    current_count = count_item.get('count', 0) 
+    current_count = items.get('count', 0) 
     updated_count = current_count + 1
     count_item['count'] = updated_count
     container.upsert_item(count_item)
