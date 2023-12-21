@@ -9,14 +9,14 @@ account_key = os.environ["COSMOS_KEY"]
 client = CosmosClient(url=endpoint, credential=account_key)
 database_name = "Counterdb"
 container_name = "counter1"
-item_id = "1"
+id = "1"
 
 database = client.get_database_client(database_name)
 container = database.get_container_client(container_name)
 
 def count_updater(req: func.HttpRequest) -> func.HttpResponse:
     
-    count_item = container.read_item(item_id, item_id)
+    count_item = container.read_item("1")
     if not count_item:
         return func.HttpResponse(
             "Count item missing",

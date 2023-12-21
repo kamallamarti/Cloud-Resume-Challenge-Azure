@@ -17,7 +17,7 @@ container = database.get_container_client(container_name)
 
 def get_count_from_cosmosdb() -> int:
 
-    count_item = container.read_item(item_id, item_id)
+    count_item = container.read_item("1")
     current_count = count_item.get('count', 0)
     return current_count
     
