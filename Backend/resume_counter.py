@@ -27,7 +27,7 @@ def count_updater(req: func.HttpRequest) -> func.HttpResponse:
             status_code=400 
         )
     current_count = count_item.get('count', 0) 
-    updated_count = current_count + 1
+    updated_count = str(int(current_count) +1)
     count_item['count'] = updated_count
     container.upsert_item(count_item)
     item_json = json.dumps(count_item, indent=2)
