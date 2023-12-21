@@ -45,7 +45,7 @@ jobs:
       shell: bash
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/'
-      #pytest -v -s
+        pytest -v -s
         
 
     - name: 'Run Azure Functions Action'
