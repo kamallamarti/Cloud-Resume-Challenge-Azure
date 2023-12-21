@@ -16,7 +16,7 @@ container = database.get_container_client(container_name)
 
 def count_updater(req: func.HttpRequest) -> func.HttpResponse:
     
-    count_item = container.read_item("id")
+    count_item = container.read_item("/Tenantid" ,"id")
     if not count_item:
         return func.HttpResponse(
             "Count item missing",
