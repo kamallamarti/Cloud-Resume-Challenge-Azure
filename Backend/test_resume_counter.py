@@ -1,4 +1,4 @@
-from .resume_counter import count_updater
+from resume_counter import count_updater
 from azure.cosmos import CosmosClient
 import os
 import requests
@@ -25,7 +25,7 @@ def test_resume_counter():
     initial_count = get_count_from_cosmosdb()
 
     
-    req = requests.get("url_of_azure_function")
+    req = requests.get("https://couterfunctionazure.azurewebsites.net/api/http_trigger")
     count_updater(req)
 
     new_count = get_count_from_cosmosdb()
