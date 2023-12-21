@@ -9,7 +9,7 @@ account_key = os.environ["COSMOS_KEY"]
 
 client = CosmosClient(url=endpoint, credential=account_key)
 database_name = "Counterdb"
-container_name = "Counter1"
+container_name = "counter1"
 item_id = "1"
 
 database = client.get_database_client(database_name)
