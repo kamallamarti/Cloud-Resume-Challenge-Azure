@@ -70,11 +70,20 @@ jobs:
           BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
           BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME }}
           BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
+          BACKEND_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          BACKEND_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          BACKEND_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          BACKEND_CLIENT_SECRETS: ${{ secrets.ARM_CLIENT_SECRETS }}
         run: |
           terraform init \
             -backend-config="resource_group_name=$BACKEND_RESOURCE_GROUP_NAME" \
             -backend-config="storage_account_name=$BACKEND_STORAGE_ACCOUNT_NAME" \
-            -backend-config="container_name=$BACKEND_STORAGE_CONTAINER_NAME"
+            -backend-config="container_name=$BACKEND_STORAGE_CONTAINER_NAME" \
+            -backend-config="client_secret=$secrets.BACKEND_CLIENT_SECRETS" \
+            -backend-config="tenant_id=$secrets.BACKEND_TENANT_ID" \
+            -backend-config="client_id=$secrets.BACKEND_CLIENT_ID" \
+            -backend-config="subscription_id=$secrets.BACKEND_SUBSCRIPTION_ID" 
+
 
       - name: Terraform Plan and Apply
         working-directory: ${{ env.TERRAFORM_WORKING_DIRECTORY }}
