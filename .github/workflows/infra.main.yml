@@ -23,9 +23,9 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      terraform: ${{ steps.filter.outputs.terraform }}
-      backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
+      terraform: ${{ steps.filter.outputs.Infra }}
+      backend: ${{ steps.filter.outputs.Backend }}
+      frontend: ${{ steps.filter.outputs.Frontend }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
