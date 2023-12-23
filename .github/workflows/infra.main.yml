@@ -84,13 +84,13 @@ jobs:
         working-directory: ${{ env.TERRAFORM_WORKING_DIRECTORY }}
         env:
           TF_VAR_rg_name: ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }}
-          TF_VAR_rg_location: ${{ secrets.RESOURCE_GROUP_LOCATION }}
-          TF_VAR_cosmosdb_account_name: ${{ secrets.COSMO_DB_ACCOUNT_NAME }}
-          TF_VAR_cosmosdb_sql_database_name: ${{ secrets.SQL_DB_NAME }}
-          TF_VAR_cosmosdb_sql_container_name: ${{ secrets.SQL_CONTAINER_NAME }}
-          TF_VAR_azure_function_name: ${{ secrets.AZURE_FUNCTION_NAME }}
+          TF_VAR_rg_location: ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }}
+          TF_VAR_cosmosdb_account_name: ${{ secrets.CLOUD_COSMO_DB_ACCOUNT_NAME }}
+          TF_VAR_cosmosdb_sql_database_name: ${{ secrets.CLOUD_SQL_DB_NAME }}
+          TF_VAR_cosmosdb_sql_container_name: ${{ secrets.CLOUD_SQL_CONTAINER_NAME }}
+          TF_VAR_azure_function_name: ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }}
           TF_VAR_static_website_storage_account: ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }}
-          TF_VAR_cdn_profile_name: ${{ secrets.CDN_PROFILE_NAME }}
+          TF_VAR_cdn_profile_name: ${{ secrets.CLOUD_CDN_PROFILE_NAME }}
         run: |
           terraform plan -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -out=tfplan
           terraform apply -auto-approve "tfplan"
