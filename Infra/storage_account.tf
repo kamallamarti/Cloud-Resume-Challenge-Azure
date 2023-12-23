@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "appsa" {
 }
 
 resource "azurerm_storage_account" "static_website" {
-  name                     = "${var.static_website_storage_account}${random_string.main.result}"
+  name                     = "${var.static_website_storage_account}"
   resource_group_name      = azurerm_resource_group.main.name
   location                 = azurerm_resource_group.main.location
   account_tier             = "Standard"
