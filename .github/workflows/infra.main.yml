@@ -140,7 +140,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload-batch --account-name ${{ secrets.PROD_STATIC_WEBSITE_STORAGE_ACCOUNT_NAME }} \
+            az storage blob upload-batch --account-name ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }} \
             --auth-mode key \
             --overwrite=true \
             --destination '$web' \
