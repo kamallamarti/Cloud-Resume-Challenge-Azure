@@ -108,7 +108,7 @@ jobs:
 
       - name: Zip the function
         run: |
-          cd Backend/
+          cd Backend
           zip -r function.zip .
 
       - name: Deploy to Azure Function
