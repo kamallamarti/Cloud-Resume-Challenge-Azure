@@ -6,7 +6,7 @@ resource "azurerm_cdn_profile" "main" {
 }
 
 resource "azurerm_cdn_endpoint" "main" {
-  name                = "${var.cdn_profile_name}${random_string.main.result}"
+  name                = "${var.cdn_profile_name}"
   profile_name        = azurerm_cdn_profile.main.name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
