@@ -83,7 +83,7 @@ jobs:
       - name: Terraform Plan and Apply
         working-directory: ${{ env.TERRAFORM_WORKING_DIRECTORY }}
         env:
-          TF_VAR_rg_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+          TF_VAR_rg_name: ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }}
           TF_VAR_rg_location: ${{ secrets.RESOURCE_GROUP_LOCATION }}
           TF_VAR_cosmosdb_account_name: ${{ secrets.COSMO_DB_ACCOUNT_NAME }}
           TF_VAR_cosmosdb_sql_database_name: ${{ secrets.SQL_DB_NAME }}
