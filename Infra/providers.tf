@@ -14,11 +14,12 @@ terraform {
     key      = "terraform.tfstate"
     use_azuread_auth  = true
     
- 
+
   }
 }
 
 provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
+  skip_provider_registration = true
 }
