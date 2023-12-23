@@ -1,4 +1,4 @@
-const productionApiUrl = 'https://couterfunctionazure.azurewebsites.net/api/http_trigger';
+const productionApiUrl = 'https://couterfunctionazure.azurewebsites.net/api/count_function';
 
 function getOrdinalSuffix(number) {
   const lastDigit = number % 10;
