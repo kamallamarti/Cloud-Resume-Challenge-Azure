@@ -89,16 +89,14 @@ jobs:
           TF_VAR_cosmosdb_sql_database_name: ${{ secrets.SQL_DB_NAME }}
           TF_VAR_cosmosdb_sql_container_name: ${{ secrets.SQL_CONTAINER_NAME }}
           TF_VAR_azure_function_name: ${{ secrets.AZURE_FUNCTION_NAME }}
-          TF_VAR_static_website_storage_account: ${{ secrets.STATIC_WEBSITE_STORAGE_ACCOUNT_NAME }}
+          TF_VAR_static_website_storage_account: ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }}
           TF_VAR_cdn_profile_name: ${{ secrets.CDN_PROFILE_NAME }}
         run: |
           terraform plan -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" -out=tfplan
           terraform apply -auto-approve "tfplan"
-
       - name: Azure logout
         run: az logout
         if: always()
-
   deploy-backend:
     needs: [changes, deploy-azure-resources]
     runs-on: ubuntu-latest
