@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "appsa" {
-  name                     = "${var.azure_function_name}${random_string.main.result}"
+  name                     = "${var.azure_function_name}"
   resource_group_name      = azurerm_resource_group.main.name
   location                 = azurerm_resource_group.main.location
   account_tier             = "Standard"
