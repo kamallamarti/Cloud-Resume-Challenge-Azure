@@ -108,16 +108,16 @@ jobs:
 
       - name: Zip the function
         run: |
-          cd backend/api
+          cd Backend/
           zip -r function.zip .
 
       - name: Deploy to Azure Function
         uses: Azure/functions-action@v1
         id: deployment
         with:
-          app-name: ${{ secrets.AZURE_FUNCTION_NAME }}
-          package: backend/api/function.zip
-          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          app-name: ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }}
+          package: Backend/function.zip
+          publish-profile: ${{ secrets.CLOUD_AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
       - name: Deployment status
         run: echo "Deployment status ${{ steps.deployment.outputs.success }}"
@@ -144,16 +144,16 @@ jobs:
             --auth-mode key \
             --overwrite=true \
             --destination '$web' \
-            --source frontend/
+            --source Frontend/
       - name: Purge CDN endpoint
         uses: azure/CLI@v1
         with:
           inlineScript: |
             az cdn endpoint purge \
             --content-paths  "/*" \
-            --profile-name ${{ secrets.CDN_PROFILE_NAME }} \
-            --name ${{ secrets.CDN_ENDPOINT_NAME }} \
-            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }}
+            --profile-name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }}
       - name: Azure logout
         run: az logout
         if: always()
