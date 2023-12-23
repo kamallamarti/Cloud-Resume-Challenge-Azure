@@ -41,7 +41,7 @@ resource "azurerm_linux_function_app" "main" {
     }
 
     cors {
-      allowed_origins     = ["https://kamalcloudresume.azureedge.net/"]
+      allowed_origins     = ["https://cloudresumecdn.azureedge.net/"]
     }
   }
 
