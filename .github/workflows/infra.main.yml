@@ -108,7 +108,7 @@ jobs:
 
       - name: Zip the function
         run: |
-          cd Backend
+          cd Backend/api
           zip -r function.zip .
 
       - name: Deploy to Azure Function
@@ -116,7 +116,7 @@ jobs:
         id: deployment
         with:
           app-name: ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }}
-          package: Backend/function.zip
+          package: Backend/api/function.zip
           publish-profile: ${{ secrets.CLOUD_AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
       - name: Deployment status
