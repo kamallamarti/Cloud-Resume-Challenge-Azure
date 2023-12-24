@@ -3,7 +3,7 @@ name: Production Infra and Deployment
 on:
   workflow_dispatch:
   push:
-    branches: [infra]
+    branches: [main]
     paths:
       - "Infra/**"
       - "Backend/**"

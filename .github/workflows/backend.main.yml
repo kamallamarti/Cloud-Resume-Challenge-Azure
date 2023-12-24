@@ -1,9 +1,6 @@
 name: deploy_backend
 on:
-  push:
-      branches: [ main ]
-      paths:
-      - "Backend/**"
+    workflow_dispatch:
 
 env:
   COSMOS_ENDPOINT: ${{ secrets.COSMOS_ENDPOINT }} 
