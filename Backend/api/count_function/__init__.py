@@ -25,7 +25,7 @@ def main(
         OutputDocument.set(updated_document)
 
     return func.HttpResponse(
-        response_body,
+        json.dumps({"count": response_body}),
         status_code=200,
         headers={"Content-Type": "application/json"},
     )
