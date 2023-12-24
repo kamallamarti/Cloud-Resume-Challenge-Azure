@@ -1,4 +1,4 @@
-const productionApiUrl = 'https://couterfunctionazure.azurewebsites.net/api/count_function';
+const productionApiUrl = 'https://cloudresumeazurefunctionn5vqnelb.azurewebsites.net/api/count_function';
 
 function getOrdinalSuffix(number) {
   const lastDigit = number % 10;
@@ -26,12 +26,13 @@ async function getVisitCountAndUpdate() {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    const countString = await response.text();
-    const visitCount = parseInt(countString, 10);
+    const responseData = await response.json(); // Parse response as JSON
+    const visitCount = responseData.count;
     const suffix = getOrdinalSuffix(visitCount);
     document.getElementById('counter').textContent = `${visitCount}${suffix}`;
   } catch (error) {
-    console.error('Error fetching and updating visit count:', error.message);
+    console.error('Error fetching and updating visit count ', error);
   }
 }
+
 getVisitCountAndUpdate();
