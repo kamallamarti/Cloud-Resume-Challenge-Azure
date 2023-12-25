@@ -29,14 +29,14 @@ The sources of information utilized to meet this challenge were:
 
 ## This Challenge is composed of 8 part
 
-1-Configure a Static Website via Azure Storage with a custom domain and HTTP
-2-Write your resume in HTML and formatting it with CSS
-3-Setup Azure Storage account and enable Static Website
-4-Enable CDN for HTTPS access to your website and custom domain
-5-Use Azure Functions App to interact with CosmosDB API to update a visitor counter (visual COde)
-6-Write javascript to capture the result of the visitor counter function and display it on the site
-7-Deplaoy azure funktion to azure because it s on the local env.    
-8-CI/CD with Azure Storage first for frontend and than backend(first test the azure funct.) and thand deploy..
+1-Configure a Static Website via Azure Storage with a custom domain and HTTP<br>
+2-Write your resume in HTML and formatting it with CSS<br>
+3-Setup Azure Storage account and enable Static Website<br>
+4-Enable CDN for HTTPS access to your website and custom domain<br>
+5-Use Azure Functions App to interact with CosmosDB API to update a visitor counter (visual COde)<br>
+6-Write javascript to capture the result of the visitor counter function and display it on the site<br>
+7-Deplaoy azure function to azure because it s on the local env.<br>    
+8-CI/CD with Azure Storage first for backend and than frontend<br>
 
 ## [Live Demo](https://kamallamarti.com)
 

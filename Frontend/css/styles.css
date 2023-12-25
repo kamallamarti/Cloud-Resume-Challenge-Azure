@@ -3671,7 +3671,7 @@ input[type="button"].btn--primary:focus {
 .s-about {
     --color-border: var(--color-gray-16);
     background-color: var(--color-gray-17);
-    padding-top: calc(6 * var(--space));
+    padding-top: calc(3 * var(--space));
     padding-bottom: var(--vspace-4);
     color: rgba(255, 255, 255, 0.4);
 }
@@ -3715,7 +3715,10 @@ input[type="button"].btn--primary:focus {
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
-
+.s-about{
+    height: 670px;
+    
+}
 .s-about__content-bottom .btn--download:hover, 
 .s-about__content-bottom .btn--download:focus {
     background-color: var(--color-2);
