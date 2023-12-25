@@ -25,7 +25,7 @@ The sources of information utilized to meet this challenge were:
 
 ## Architecture
 
-![Architecture Diagram](C:\Users\kamal.lamarti\Desktop\CloudResume\Frontend\images)
+![Architecture Diagram](images/architecture.png)
 
 ## This Challenge is composed of 8 part
 
