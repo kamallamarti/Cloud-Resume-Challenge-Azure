@@ -3100,7 +3100,7 @@ input[type="button"].btn--primary:focus {
  * ------------------------------------------------------------------- */
 .s-header__nav {
     font-family: var(--font-1);
-    font-size: 1.45rem;
+    font-size: 2.45rem;
     font-weight: 400;
     margin: 0;
     padding: 0;
@@ -3341,7 +3341,7 @@ input[type="button"].btn--primary:focus {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background-image: url(../images/header-bg-3000.jpg);
+    background-image: url(../images/explore-with-joshua-5lgPYsE_qe0-unsplash.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -3682,9 +3682,8 @@ input[type="button"].btn--primary:focus {
 }
 
 .s-about__pic {
-    width: var(--vspace-5);
-    height: var(--vspace-5);
-    border: 1.6rem solid rgba(255, 255, 255, 0.02);
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
 }
 
@@ -4457,6 +4456,7 @@ input[type="button"].btn--primary:focus {
  * ## copyright
  * ------------------------------------------------------------------- */
 .ss-copyright {
+    color: white;
     z-index: 2;
     -ms-flex-order: -1;
     -webkit-box-ordinal-group: 0;
@@ -4474,7 +4474,7 @@ input[type="button"].btn--primary:focus {
     content: "|";
     display: inline-block;
     padding: 0 .8rem 0 1rem;
-    color: rgba(255, 255, 255, 0.1);
+    color: rgba(196, 167, 167, 0.801);
 }
 
 .ss-copyright span:last-child::after {
