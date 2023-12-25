@@ -42,7 +42,7 @@ The sources of information utilized to meet this challenge were:
 
 ## Blog
 
-[My Cloud Resume Challenge Journey](https://medium.com/@hussainajhar8/my-cloud-resume-challenge-journey-building-a-fully-automated-portfolio-9b5802badb14)
+[My Cloud Resume Challenge Journey](https://medium.com/@kamal.lamarti/challenge-my-cloud-resume-azure-version-e2dbdf4e6620)
 
 
 Whether you're an Azure veteran or a newcomer, I hope that my project serves as inspiration and aid for your cloud computing journey.
