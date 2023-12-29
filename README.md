@@ -25,7 +25,8 @@ The sources of information utilized to meet this challenge were:
 
 ## Architecture
 
-![Architecture Diagram](https://drive.google.com/file/d/1UiGLPqjMV9pXlrsjPGcTjAmoi5qqSL9c/view?usp=sharing)
+![architecture](https://github.com/kamallamarti/Cloud-Resume-Challenge-Azure/assets/117119406/4437011f-4bb4-4a67-90e2-d7b1ac894353)
+
 
 ## This Challenge is composed of 8 part
 
