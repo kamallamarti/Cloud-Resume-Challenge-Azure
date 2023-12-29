@@ -28,7 +28,7 @@ The sources of information utilized to meet this challenge were:
 ![architecture](https://github.com/kamallamarti/Cloud-Resume-Challenge-Azure/assets/117119406/4437011f-4bb4-4a67-90e2-d7b1ac894353)
 
 
-## This Challenge is composed of 8 part
+## This Challenge is composed of 8 part 
 
 1-Configure a Static Website via Azure Storage with a custom domain and HTTP<br>
 2-Write your resume in HTML and formatting it with CSS<br>
