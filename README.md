@@ -25,7 +25,7 @@ The sources of information utilized to meet this challenge were:
 
 ## Architecture
 
-![Architecture Diagram](images/architecture.png)
+![Architecture Diagram](https://drive.google.com/file/d/1UiGLPqjMV9pXlrsjPGcTjAmoi5qqSL9c/view?usp=sharing)
 
 ## This Challenge is composed of 8 part
 
