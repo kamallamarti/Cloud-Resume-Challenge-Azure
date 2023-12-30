@@ -49,4 +49,4 @@ The sources of information utilized to meet this challenge were:
 
 Whether you're an Azure veteran or a newcomer, I hope that my project serves as inspiration and aid for your cloud computing journey.
 If you require assistance or have any questions, feel free to drop a message.:) 
- 
+  
