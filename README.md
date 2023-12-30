@@ -19,7 +19,7 @@ This [site](https://kamallamarti.com/), capturing my journey, will call Azure it
 
 The sources of information utilized to meet this challenge were:
 
-- Microsoft documentations 
+- Microsoft documentations
 - Chat GPT
 - A collection of videos from YouTube *University*, including one titled [ACG Projects: Build Your Resume on Azure with Blob Storage, Functions, CosmosDB, and GitHub Actions](https://youtu.be/ieYrBWmkfno?si=wf3mU-RwmzEosM97)
 
