@@ -39,7 +39,8 @@ The sources of information utilized to meet this challenge were:
 7-Deplaoy azure function to azure because it s on the local env.<br>    
 8-CI/CD with Azure Storage first for backend and than frontend<br>
 
-## [Live Demo](www.kamallamarti.com)
+## [Live Demo](http://www.kamallamarti.com)
+
 
 ## Blog
 
