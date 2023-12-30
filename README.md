@@ -14,7 +14,7 @@ I initially wanted to break the monotony of studying by diving into projects to 
 
 After a well-deserved break, I committed to the Cloud Resume Challenge to apply my skillset. I'm jazzing up my portfolio site to showcase projects more creatively, adding a snazzy resume page for the Challenge.
 
-This [site](https://kamallamarti.com/), capturing my journey, will call Azure its home, and the [blog](https://cloudresumechallenge.dev/) will be my tell-all on progress and challenges.
+This [site](https://kamallamarti.com/){:target="_blank"}, capturing my journey, will call Azure its home, and the [blog](https://cloudresumechallenge.dev/){:target="_blank"} will be my tell-all on progress and challenges.
 
 
 The sources of information utilized to meet this challenge were:
@@ -39,11 +39,11 @@ The sources of information utilized to meet this challenge were:
 7-Deplaoy azure function to azure because it s on the local env.<br>    
 8-CI/CD with Azure Storage first for backend and than frontend<br>
 
-## [Live Demo](https://kamallamarti.com)
+## [Live Demo](https://kamallamarti.com){:target="_blank"}
 
 ## Blog
 
-[My Cloud Resume Challenge Journey](https://medium.com/@kamal.lamarti/challenge-my-cloud-resume-azure-version-e2dbdf4e6620)
+[My Cloud Resume Challenge Journey](https://medium.com/@kamal.lamarti/challenge-my-cloud-resume-azure-version-e2dbdf4e6620){:target="_blank"}
 
 
 Whether you're an Azure veteran or a newcomer, I hope that my project serves as inspiration and aid for your cloud computing journey.
