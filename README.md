@@ -37,7 +37,7 @@ The sources of information utilized to meet this challenge were:
 5-Use Azure Functions App to interact with CosmosDB API to update a visitor counter (visual COde)<br>
 6-Write javascript to capture the result of the visitor counter function and display it on the site<br>
 7-Deplaoy azure function to azure because it s on the local env.<br>    
-8-CI/CD with Azure Storage first for backend and than frontend<br>
+8-CI/CD with Azure Storage first for backend and than frontend<br> 
 
 ## [Live Demo](http://www.kamallamarti.com)
 
@@ -48,5 +48,5 @@ The sources of information utilized to meet this challenge were:
 
 
 Whether you're an Azure veteran or a newcomer, I hope that my project serves as inspiration and aid for your cloud computing journey.
-If you require assistance or have any questions, feel free to drop a message.:) 
+If you require assistance or have any questions, feel free to drop a message :) 
   
