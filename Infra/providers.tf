@@ -18,4 +18,6 @@ provider "azurerm" {
   features {}
   subscription_id = var.subscription_id
   skip_provider_registration = true
+  # These are set via environment variables:
+  # ARM_CLIENT_ID, ARM_CLIENT_SECRET, ARM_SUBSCRIPTION_ID, ARM_TENANT_ID
 }
