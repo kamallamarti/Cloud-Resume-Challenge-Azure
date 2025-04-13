@@ -10,12 +10,8 @@ terraform {
     }
   }
 
-  backend "azurerm" {
-    key      = "terraform.tfstate"
-    use_azuread_auth  = true
-    
-
-  }
+  # Using local state file instead of Azure backend
+  # This is a workaround for the AuthorizationPermissionMismatch issue
 }
 
 provider "azurerm" {
