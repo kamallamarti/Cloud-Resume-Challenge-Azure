@@ -1,0 +1,44 @@
+name: Deploy Frontend Only
+
+on:
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches: [main]
+    paths:
+      - "Frontend/**"
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload-batch --account-name ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }} \
+            --auth-mode login \
+            --overwrite=true \
+            --destination '$web' \
+            --source Frontend/
+            
+      - name: Purge CDN endpoint
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az cdn endpoint purge \
+            --content-paths  "/*" \
+            --profile-name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }}
+            
+      - name: Azure logout
+        run: az logout
+        if: always()
