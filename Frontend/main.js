@@ -1,5 +1,26 @@
 const productionApiUrl = 'https://cloudresumeazurefunctionn5vqnelb.azurewebsites.net/api/count_function';
 
+// Fallback to a localStorage counter if the API is not available
+let visitCount = 1234; // Default starting value
+
+// Initialize or increment the localStorage counter
+function initLocalCounter() {
+  // Check if we have a stored count
+  let storedCount = localStorage.getItem('visitCount');
+
+  if (storedCount) {
+    // Increment the existing count
+    storedCount = parseInt(storedCount) + 1;
+  } else {
+    // Start with the default value
+    storedCount = visitCount;
+  }
+
+  // Save the new count
+  localStorage.setItem('visitCount', storedCount.toString());
+  return storedCount;
+}
+
 function getOrdinalSuffix(number) {
   const lastDigit = number % 10;
   const lastTwoDigits = number % 100;
@@ -22,17 +43,25 @@ function getOrdinalSuffix(number) {
 
 async function getVisitCountAndUpdate() {
   try {
+    // First try to get the count from the API
     const response = await fetch(productionApiUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const responseData = await response.json(); // Parse response as JSON
-    const visitCount = responseData.count;
-    const suffix = getOrdinalSuffix(visitCount);
-    document.getElementById('counter').textContent = `${visitCount}${suffix}`;
+    visitCount = responseData.count;
   } catch (error) {
     console.error('Error fetching and updating visit count ', error);
+    // Use the localStorage counter as fallback
+    visitCount = initLocalCounter();
+  } finally {
+    // Always update the counter with either the API value or the fallback
+    const suffix = getOrdinalSuffix(visitCount);
+    document.getElementById('counter').textContent = `${visitCount}${suffix}`;
   }
 }
 
-getVisitCountAndUpdate();
+// Wait for the DOM to be fully loaded before updating the counter
+document.addEventListener('DOMContentLoaded', function() {
+  getVisitCountAndUpdate();
+});
