@@ -1,0 +1,191 @@
+name: Deploy with Azure CLI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "Infra/**"
+      - "Backend/**"
+      - "Frontend/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create Resource Group
+        run: |
+          az group create --name ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} --location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }}
+
+      - name: Create Storage Account for Static Website
+        run: |
+          az storage account create \
+            --name ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }} \
+            --sku Standard_LRS \
+            --kind StorageV2 \
+            --https-only true \
+            --min-tls-version TLS1_2
+
+      - name: Enable Static Website
+        run: |
+          az storage blob service-properties update \
+            --account-name ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }} \
+            --static-website \
+            --index-document index.html \
+            --404-document 404.html
+
+      - name: Create CosmosDB Account
+        run: |
+          az cosmosdb create \
+            --name ${{ secrets.CLOUD_COSMO_DB_ACCOUNT_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --kind GlobalDocumentDB \
+            --capabilities EnableServerless \
+            --default-consistency-level Session
+
+      - name: Create CosmosDB SQL Database
+        run: |
+          az cosmosdb sql database create \
+            --account-name ${{ secrets.CLOUD_COSMO_DB_ACCOUNT_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --name ${{ secrets.CLOUD_SQL_DB_NAME }}
+
+      - name: Create CosmosDB SQL Container
+        run: |
+          az cosmosdb sql container create \
+            --account-name ${{ secrets.CLOUD_COSMO_DB_ACCOUNT_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --database-name ${{ secrets.CLOUD_SQL_DB_NAME }} \
+            --name ${{ secrets.CLOUD_SQL_CONTAINER_NAME }} \
+            --partition-key-path "/id"
+
+      - name: Create App Service Plan
+        run: |
+          az appservice plan create \
+            --name "ASP-${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }}" \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }} \
+            --sku Y1 \
+            --is-linux
+
+      - name: Create Storage Account for Function App
+        run: |
+          RANDOM_STRING=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+          STORAGE_ACCOUNT_NAME="func${RANDOM_STRING}"
+          
+          az storage account create \
+            --name $STORAGE_ACCOUNT_NAME \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }} \
+            --sku Standard_LRS \
+            --kind StorageV2
+          
+          echo "STORAGE_ACCOUNT_NAME=$STORAGE_ACCOUNT_NAME" >> $GITHUB_ENV
+
+      - name: Create Function App
+        run: |
+          az functionapp create \
+            --name ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --storage-account ${{ env.STORAGE_ACCOUNT_NAME }} \
+            --runtime python \
+            --runtime-version 3.11 \
+            --functions-version 4 \
+            --os-type Linux \
+            --consumption-plan-location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }}
+          
+          # Configure CORS
+          az functionapp cors add \
+            --name ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --allowed-origins "https://www.kamallamarti.com"
+          
+          # Get CosmosDB connection string
+          COSMOS_CONNECTION_STRING=$(az cosmosdb keys list \
+            --name ${{ secrets.CLOUD_COSMO_DB_ACCOUNT_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --type connection-strings \
+            --query connectionStrings[0].connectionString \
+            --output tsv)
+          
+          # Set Function App settings
+          az functionapp config appsettings set \
+            --name ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --settings "COSMOSDB_CONNECTION_STRING=$COSMOS_CONNECTION_STRING" \
+            "COSMOSDB_DATABASE_NAME=${{ secrets.CLOUD_SQL_DB_NAME }}" \
+            "COSMOSDB_CONTAINER_NAME=${{ secrets.CLOUD_SQL_CONTAINER_NAME }}"
+
+      - name: Create CDN Profile
+        run: |
+          az cdn profile create \
+            --name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --sku Standard_Microsoft \
+            --location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }}
+
+      - name: Create CDN Endpoint
+        run: |
+          # Get the storage account's web endpoint
+          STORAGE_WEB_ENDPOINT=$(az storage account show \
+            --name ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --query primaryEndpoints.web \
+            --output tsv)
+          
+          # Remove the https:// and trailing slash
+          ORIGIN_HOST_NAME=${STORAGE_WEB_ENDPOINT#https://}
+          ORIGIN_HOST_NAME=${ORIGIN_HOST_NAME%/}
+          
+          az cdn endpoint create \
+            --name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --profile-name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --origin $ORIGIN_HOST_NAME \
+            --origin-host-header $ORIGIN_HOST_NAME \
+            --location ${{ secrets.CLOUD_RESOURCE_GROUP_LOCATION }}
+
+      - name: Deploy Backend Function
+        run: |
+          cd Backend/api
+          zip -r function.zip .
+          
+          az functionapp deployment source config-zip \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }} \
+            --name ${{ secrets.CLOUD_AZURE_FUNCTION_NAME }} \
+            --src function.zip
+
+      - name: Deploy Frontend
+        run: |
+          az storage blob upload-batch \
+            --account-name ${{ secrets.CLOUD_RESUME_STORAGE_ACCOUNT }} \
+            --auth-mode key \
+            --overwrite=true \
+            --destination '$web' \
+            --source Frontend/
+
+      - name: Purge CDN Endpoint
+        run: |
+          az cdn endpoint purge \
+            --content-paths "/*" \
+            --profile-name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --name ${{ secrets.CLOUD_CDN_PROFILE_NAME }} \
+            --resource-group ${{ secrets.CLOUD_RESUME_RESOURCEGROUPE }}
+
+      - name: Azure Logout
+        run: az logout
+        if: always()
