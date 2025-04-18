@@ -43,6 +43,8 @@ The sources of information utilized to meet this challenge were:
 [My Cloud Resume Challenge Journey](https://medium.com/@kamal.lamarti/challenge-my-cloud-resume-azure-version-e2dbdf4e6620)
 
 
-Whether you're an Azure veteran or a newcomer, I hope that my project serves as inspiration and aid for your cloud computing journey. 
-If you require assistance or have any questions, feel free to drop a message :) 
+Whether you're an Azure veteran or a newcomer , I hope that my project serves as inspiration and aid for your cloud computing journey. 
+If you require assistance or have any questions, feel free to drop a message  :) 
+
+# Pipeline Test - Please Ignore
    
