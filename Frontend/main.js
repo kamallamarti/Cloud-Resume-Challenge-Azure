@@ -43,6 +43,8 @@ function getOrdinalSuffix(number) {
 
 async function getVisitCountAndUpdate() {
   try {
+    // main.js
+    // Pipeline test comment - please ignore
     // First try to get the count from the API
     const response = await fetch(productionApiUrl);
     if (!response.ok) {
