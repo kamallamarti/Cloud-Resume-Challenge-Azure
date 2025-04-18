@@ -24,28 +24,14 @@ env:
 jobs:
   changes:
     runs-on: ubuntu-latest
-    outputs:
-      terraform: ${{ steps.filter.outputs.Infra }}
-      backend: ${{ steps.filter.outputs.Backend }}
-      frontend: ${{ steps.filter.outputs.Frontend }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            Infra:
-              - 'Infra/**'
-            Backend:
-              - 'Backend/**'
-            Frontend:
-              - 'Frontend/**'
 
   deploy-azure-resources:
     needs: changes
     runs-on: ubuntu-latest
 
-    if: ${{ always() && needs.changes.outputs.terraform == 'true' }}
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -85,10 +71,10 @@ jobs:
         run: az logout
         if: always()
   deploy-backend:
-    needs: [changes, deploy-azure-resources]
+    needs: deploy-azure-resources
     runs-on: ubuntu-latest
 
-    if: ${{ always() && needs.deploy-azure-resources.result != 'failure' && needs.changes.outputs.backend == 'true' }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -110,8 +96,8 @@ jobs:
         run: echo "Deployment status ${{ steps.deployment.outputs.success }}"
 
   deploy-frontend:
-    needs: [changes, deploy-azure-resources, deploy-backend]
-    if: ${{ always() && needs.deploy-azure-resources.result != 'failure' && needs.deploy-backend.result != 'failure' && needs.changes.outputs.frontend == 'true' }}
+    needs: deploy-backend
+
     runs-on: ubuntu-latest
 
     steps:
