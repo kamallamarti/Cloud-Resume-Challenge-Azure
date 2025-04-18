@@ -46,6 +46,7 @@ async function getVisitCountAndUpdate() {
     // main.js
     // Pipeline test comment - please ignore
 // Triggering workflow after job dependency fix
+// Workflow trigger at 2025-04-18T11:17:14+02:00
     // First try to get the count from the API
     const response = await fetch(productionApiUrl);
     if (!response.ok) {
